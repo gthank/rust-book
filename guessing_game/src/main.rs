@@ -36,11 +36,10 @@ fn main() {
         // OK, before, `guess` was a `String`, because we were just reading
         // in user input. Now we want to turn it into an integer so we can
         // compare against it.
-        let guess: u32 = guess.trim().parse()
-            // This `ok` method is attached to a different type of `Result`,
-            // but the idea is the same.
-            .ok()
-            .expect("Please type a number!");
+        let guess: u32 = match guess.trim().parse() {
+          Ok(num) => num,
+          Err(_) => continue,
+        };
         println!("You guessed: {}", guess);
 
         match guess.cmp(&secret_number) {
